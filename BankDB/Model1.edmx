@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bankDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Acount">
+          <Key>
+            <PropertyRef Name="IdAcount" />
+          </Key>
+          <Property Name="IdAcount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdClient" Type="int" Nullable="false" />
+          <Property Name="IdType" Type="int" Nullable="false" />
+          <Property Name="DateOpen" Type="date" Nullable="false" />
+          <Property Name="DateClose" Type="date" Nullable="false" />
+          <Property Name="Sum" Type="int" Nullable="false" />
+          <Property Name="Garantee" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="AcountType">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameType" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="interestRate" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Adress" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdCode" Type="int" Nullable="false" />
+          <Property Name="Phone" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="DateOfBirdth" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="IdOperation" />
+          </Key>
+          <Property Name="IdOperation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAcount" Type="int" Nullable="false" />
+          <Property Name="DateOperation" Type="datetime" Nullable="false" />
+          <Property Name="TypeOperation" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="SumOperation" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="Acounttype-Acount">
+          <End Role="AcountType" Type="Self.AcountType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Acount" Type="Self.Acount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcountType">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="Acount">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Client-Acount">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Acount" Type="Self.Acount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Acount">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Operation-Acount">
+          <End Role="Acount" Type="Self.Acount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Operation" Type="Self.Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Acount">
+              <PropertyRef Name="IdAcount" />
+            </Principal>
+            <Dependent Role="Operation">
+              <PropertyRef Name="IdAcount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bankDatabaseModelStoreContainer">
+          <EntitySet Name="Acount" EntityType="Self.Acount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AcountType" EntityType="Self.AcountType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operation" EntityType="Self.Operation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Acounttype-Acount" Association="Self.Acounttype-Acount">
+            <End Role="AcountType" EntitySet="AcountType" />
+            <End Role="Acount" EntitySet="Acount" />
+          </AssociationSet>
+          <AssociationSet Name="Client-Acount" Association="Self.Client-Acount">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Acount" EntitySet="Acount" />
+          </AssociationSet>
+          <AssociationSet Name="Operation-Acount" Association="Self.Operation-Acount">
+            <End Role="Acount" EntitySet="Acount" />
+            <End Role="Operation" EntitySet="Operation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bankDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Acount">
+          <Key>
+            <PropertyRef Name="IdAcount" />
+          </Key>
+          <Property Name="IdAcount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+          <Property Name="IdType" Type="Int32" Nullable="false" />
+          <Property Name="DateOpen" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateClose" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Sum" Type="Int32" Nullable="false" />
+          <Property Name="Garantee" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="AcountType" Relationship="Self.Acounttype_Acount" FromRole="Acount" ToRole="AcountType" />
+          <NavigationProperty Name="Client" Relationship="Self.Client_Acount" FromRole="Acount" ToRole="Client" />
+          <NavigationProperty Name="Operation" Relationship="Self.Operation_Acount" FromRole="Acount" ToRole="Operation" />
+        </EntityType>
+        <EntityType Name="AcountType">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="interestRate" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Acount" Relationship="Self.Acounttype_Acount" FromRole="AcountType" ToRole="Acount" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="IdCode" Type="Int32" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirdth" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Acount" Relationship="Self.Client_Acount" FromRole="Client" ToRole="Acount" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="IdOperation" />
+          </Key>
+          <Property Name="IdOperation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAcount" Type="Int32" Nullable="false" />
+          <Property Name="DateOperation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TypeOperation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="SumOperation" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Acount" Relationship="Self.Operation_Acount" FromRole="Operation" ToRole="Acount" />
+        </EntityType>
+        <Association Name="Acounttype_Acount">
+          <End Role="AcountType" Type="Self.AcountType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Acount" Type="Self.Acount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcountType">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="Acount">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Client_Acount">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Acount" Type="Self.Acount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Acount">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Operation_Acount">
+          <End Role="Acount" Type="Self.Acount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Operation" Type="Self.Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Acount">
+              <PropertyRef Name="IdAcount" />
+            </Principal>
+            <Dependent Role="Operation">
+              <PropertyRef Name="IdAcount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bankDatabaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Acount" EntityType="Self.Acount" />
+          <EntitySet Name="AcountType" EntityType="Self.AcountType" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Operation" EntityType="Self.Operation" />
+          <AssociationSet Name="Acounttype_Acount" Association="Self.Acounttype_Acount">
+            <End Role="AcountType" EntitySet="AcountType" />
+            <End Role="Acount" EntitySet="Acount" />
+          </AssociationSet>
+          <AssociationSet Name="Client_Acount" Association="Self.Client_Acount">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Acount" EntitySet="Acount" />
+          </AssociationSet>
+          <AssociationSet Name="Operation_Acount" Association="Self.Operation_Acount">
+            <End Role="Acount" EntitySet="Acount" />
+            <End Role="Operation" EntitySet="Operation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bankDatabaseModelStoreContainer" CdmEntityContainer="bankDatabaseEntities1">
+          <EntitySetMapping Name="Acount">
+            <EntityTypeMapping TypeName="bankDatabaseModel.Acount">
+              <MappingFragment StoreEntitySet="Acount">
+                <ScalarProperty Name="IdAcount" ColumnName="IdAcount" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="DateOpen" ColumnName="DateOpen" />
+                <ScalarProperty Name="DateClose" ColumnName="DateClose" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+                <ScalarProperty Name="Garantee" ColumnName="Garantee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AcountType">
+            <EntityTypeMapping TypeName="bankDatabaseModel.AcountType">
+              <MappingFragment StoreEntitySet="AcountType">
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="nameType" ColumnName="nameType" />
+                <ScalarProperty Name="interestRate" ColumnName="interestRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="bankDatabaseModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="IdCode" ColumnName="IdCode" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="DateOfBirdth" ColumnName="DateOfBirdth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operation">
+            <EntityTypeMapping TypeName="bankDatabaseModel.Operation">
+              <MappingFragment StoreEntitySet="Operation">
+                <ScalarProperty Name="IdOperation" ColumnName="IdOperation" />
+                <ScalarProperty Name="IdAcount" ColumnName="IdAcount" />
+                <ScalarProperty Name="DateOperation" ColumnName="DateOperation" />
+                <ScalarProperty Name="TypeOperation" ColumnName="TypeOperation" />
+                <ScalarProperty Name="SumOperation" ColumnName="SumOperation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
