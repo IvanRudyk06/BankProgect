@@ -17,7 +17,22 @@ namespace BankDB
         public int IdOperation { get; set; }
         public int IdAcount { get; set; }
         public System.DateTime DateOperation { get; set; }
-        public string TypeOperation { get; set; }
+        private string typeOperation;
+
+        public string TypeOperation
+        {
+            get
+            {
+                if (typeOperation != null)
+                    return typeOperation.Trim();
+                else
+                    return typeOperation;
+            }
+            set
+            {
+                typeOperation = value;
+            }
+        }
         public int SumOperation { get; set; }
     
         public virtual Acount Acount { get; set; }

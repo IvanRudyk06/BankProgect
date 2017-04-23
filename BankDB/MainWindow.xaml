@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankDB"
         mc:Ignorable="d"
-        Title="MainWindow" Height="675.334" Width="1001">
+        Title="BankDb" Height="675.334" Width="1001" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -45,6 +45,8 @@
                     <DataTemplate>
                         <StackPanel>
                             <StackPanel Margin="5" Orientation="Horizontal">
+                                <TextBlock FontSize="18" Text="Acount № " />
+                                <TextBlock FontSize="18" Text="{Binding Path=CodeAcount}" />
                                 <TextBlock FontSize="18" Text="Client: " />
                                 <TextBlock FontSize="18" Text="{Binding Path=NameClient}" />
                                 <TextBlock FontSize="18" Text="  Acount: " />
@@ -62,22 +64,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Grid HorizontalAlignment="Left" Height="286" Margin="616,10,0,0" VerticalAlignment="Top" Width="347" Background="White">
-                <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="327" ItemsSource="{Binding  ActiveAcountOperation, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <StackPanel Margin="5" Orientation="Horizontal">
-                                    <TextBlock FontSize="18" Text="  Type Operation: " />
-                                    <TextBlock FontSize="18" Text="{Binding Path=TypeOperation, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock FontSize="18" Text="  Sum: " />
-                                    <TextBlock FontSize="18" Text="{Binding Path=SumOperation, UpdateSourceTrigger=PropertyChanged}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
             <Label x:Name="label2_Copy" Content="Acounts" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontSize="20" FontFamily="MV Boli" FontWeight="Bold" Foreground="#FF447607">
                 <Label.RenderTransform>
                     <TransformGroup>
@@ -88,6 +74,33 @@
                     </TransformGroup>
                 </Label.RenderTransform>
             </Label>
+            <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="327" ItemsSource="{Binding ActiveAcountOperation, UpdateSourceTrigger=PropertyChanged}" Margin="636,82,0,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <StackPanel Margin="5" Orientation="Horizontal">
+                                <TextBlock FontSize="18" Text="  Type Operation: " />
+                                <TextBlock FontSize="18" Text="{Binding TypeOperation, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock FontSize="18" Text="  Sum: " />
+                                <TextBlock FontSize="18" Text="{Binding SumOperation, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Label x:Name="label2_Copy1" Content="Operation" HorizontalAlignment="Left" Margin="630,-25,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.21,3.853" FontSize="20" FontFamily="MV Boli" FontWeight="Bold" Foreground="#FF447607">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-13.85"/>
+                        <TranslateTransform X="16.74" Y="-143.837"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+            <Button x:Name="button1" Content="ADD Operation" HorizontalAlignment="Left" Margin="787,10,0,0" VerticalAlignment="Top" Width="176" Height="21" Command="{Binding ComAddOperationWShow}" Click="button_Click"/>
+            <Label x:Name="label_Copy1" Content="Acount №" HorizontalAlignment="Left" Margin="636,46,0,0" VerticalAlignment="Top" FontSize="16"/>
+            <Label x:Name="label3" HorizontalAlignment="Left" Margin="724,46,0,0" VerticalAlignment="Top" FontSize="16" Content="{Binding SelectedAcount.CodeAcount, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="292" Margin="10,321,0,0" Grid.Row="1" VerticalAlignment="Top" Width="567" Background="#FFD1D1D1">
             <Grid HorizontalAlignment="Left" Height="272" Margin="319,10,0,0" VerticalAlignment="Top" Width="238" Background="White">

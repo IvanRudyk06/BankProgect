@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bankDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bankDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acount">
           <Key>
             <PropertyRef Name="IdAcount" />
@@ -16,6 +16,7 @@
           <Property Name="DateClose" Type="date" Nullable="false" />
           <Property Name="Sum" Type="int" Nullable="false" />
           <Property Name="Garantee" Type="nchar" MaxLength="20" />
+          <Property Name="CodeAcount" Type="nchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="AcountType">
           <Key>
@@ -107,8 +108,7 @@
             <End Role="Operation" EntitySet="Operation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bankDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -126,6 +126,7 @@
           <NavigationProperty Name="AcountType" Relationship="Self.Acounttype_Acount" FromRole="Acount" ToRole="AcountType" />
           <NavigationProperty Name="Client" Relationship="Self.Client_Acount" FromRole="Acount" ToRole="Client" />
           <NavigationProperty Name="Operation" Relationship="Self.Operation_Acount" FromRole="Acount" ToRole="Operation" />
+          <Property Name="CodeAcount" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="AcountType">
           <Key>
@@ -229,6 +230,7 @@
           <EntitySetMapping Name="Acount">
             <EntityTypeMapping TypeName="bankDatabaseModel.Acount">
               <MappingFragment StoreEntitySet="Acount">
+                <ScalarProperty Name="CodeAcount" ColumnName="CodeAcount" />
                 <ScalarProperty Name="IdAcount" ColumnName="IdAcount" />
                 <ScalarProperty Name="IdClient" ColumnName="IdClient" />
                 <ScalarProperty Name="IdType" ColumnName="IdType" />

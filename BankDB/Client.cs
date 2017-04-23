@@ -12,14 +12,12 @@ namespace BankDB
     using System;
     using System.Collections.Generic;
     
-
     public partial class Client : ICloneable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Client()
         {
             this.Acount = new HashSet<Acount>();
-            DateOfBirdth = new DateTime(1900, 01, 01);
         }
     
         public int IdClient { get; set; }
@@ -29,11 +27,10 @@ namespace BankDB
         {
             get
             {
-                if (firstname!=null)
+                if (firstname != null)
                     return firstname.Trim();
                 else
                     return firstname;
-
             }
             set
             {
@@ -60,35 +57,17 @@ namespace BankDB
 
             }
         }
-        private string adress;
-
-        public string Adress
-        {
-            get
-            {
-                if (adress != null)
-                    return adress.Trim();
-                else return adress;
-            }
-            set
-            {
-                adress = value;
-            }
-        }
-
-
+        public string Adress { get; set; }
         public int IdCode { get; set; }
         public string Phone { get; set; }
         public System.DateTime DateOfBirdth { get; set; }
-
-        
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acount> Acount { get; set; }
 
         public object Clone()
         {
-            return this.MemberwiseClone();
+           return this.MemberwiseClone();
         }
     }
 }

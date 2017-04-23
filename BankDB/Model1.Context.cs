@@ -16,7 +16,7 @@ namespace BankDB
     public partial class bankDatabaseEntities : DbContext
     {
         public bankDatabaseEntities()
-            : base("name=bankDatabaseEntities")
+            : base("name=bankDatabaseEntities1")
         {
         }
     

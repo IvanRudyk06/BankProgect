@@ -26,8 +26,5 @@ namespace BankDB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acount> Acount { get; set; }
-
-
-        
     }
 }
