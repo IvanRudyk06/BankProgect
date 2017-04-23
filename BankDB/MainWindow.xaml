@@ -39,26 +39,26 @@
                     </TransformGroup>
                 </TextBox.RenderTransform>
             </TextBox>
-            <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="250" Margin="10,46,0,0" VerticalAlignment="Top" Width="589" ItemsSource="{Binding Acounts}"
-                 SelectedItem="{Binding SelectedAcount}">
+            <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="250" Margin="10,46,0,0" VerticalAlignment="Top" Width="589" ItemsSource="{Binding Acounts, UpdateSourceTrigger=PropertyChanged}"
+                 SelectedItem="{Binding SelectedAcount, UpdateSourceTrigger=PropertyChanged}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
                             <StackPanel Margin="5" Orientation="Horizontal">
                                 <TextBlock FontSize="18" Text="Acount № " />
-                                <TextBlock FontSize="18" Text="{Binding Path=CodeAcount}" />
+                                <TextBlock FontSize="18" Text="{Binding Path=CodeAcount, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock FontSize="18" Text="Client: " />
-                                <TextBlock FontSize="18" Text="{Binding Path=NameClient}" />
+                                <TextBlock FontSize="18" Text="{Binding Path=NameClient, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock FontSize="18" Text="  Acount: " />
-                                <TextBlock FontSize="18" Text="{Binding Path=AcountType.NameType}" />
+                                <TextBlock FontSize="18" Text="{Binding Path=AcountType.NameType, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock FontSize="18" Text="  Sum: " />
-                                <TextBlock FontSize="18" Text="{Binding Path=Sum}" />
+                                <TextBlock FontSize="18" Text="{Binding Path=Sum, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                             <StackPanel Margin="5" Orientation="Horizontal">
                                 <TextBlock FontSize="14" Text="Date open: " />
-                                <TextBlock FontSize="14" Text="{Binding Path=DateOp}" />
+                                <TextBlock FontSize="14" Text="{Binding Path=DateOp, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock FontSize="14" Text="  Date close: " />
-                                <TextBlock FontSize="14" Text="{Binding Path=DateCl}" />
+                                <TextBlock FontSize="14" Text="{Binding Path=DateCl, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
@@ -103,21 +103,21 @@
             <Label x:Name="label3" HorizontalAlignment="Left" Margin="724,46,0,0" VerticalAlignment="Top" FontSize="16" Content="{Binding SelectedAcount.CodeAcount, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="292" Margin="10,321,0,0" Grid.Row="1" VerticalAlignment="Top" Width="567" Background="#FFD1D1D1">
-            <Grid HorizontalAlignment="Left" Height="272" Margin="319,10,0,0" VerticalAlignment="Top" Width="238" Background="White">
-                <Label x:Name="label1" Content="First Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Text="{Binding SelectedClient.FirstName, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label x:Name="label1_Copy" Content="Name" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox1_Copy" HorizontalAlignment="Left" Height="23" Margin="130,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" Text="{Binding SelectedClient.Name, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label x:Name="label1_Copy1" Content="Id Code" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox1_Copy1" HorizontalAlignment="Left" Height="23" Margin="10,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="91" Text="{Binding SelectedClient.IdCode, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label x:Name="label1_Copy2" Content="Phone" HorizontalAlignment="Left" Margin="11,118,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox1_Copy2" HorizontalAlignment="Left" Height="23" Margin="11,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122" TextChanged="textBox1_Copy2_TextChanged" Text="{Binding SelectedClient.Phone, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label x:Name="label1_Copy3" Content="Date of Birdth" HorizontalAlignment="Left" Margin="110,64,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox1_Copy3" HorizontalAlignment="Left" Height="23" Margin="110,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67" TextChanged="textBox1_Copy2_TextChanged" Text="{Binding SelectedClient.DateOfBirdth, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label x:Name="label1_Copy4" Content="Adress" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox1_Copy4" HorizontalAlignment="Left" Height="40" Margin="10,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218" TextChanged="textBox1_Copy2_TextChanged" Text="{Binding SelectedClient.Adress, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button x:Name="button" Content="Save" HorizontalAlignment="Left" Margin="130,243,0,0" VerticalAlignment="Top" Width="98" Height="19" Command="{Binding CommandUpdateClient}" Click="button_Click"/>
-                <Button x:Name="button_Copy" Content="New" HorizontalAlignment="Left" Margin="10,243,0,0" VerticalAlignment="Top" Width="98" Height="19" Command="{Binding CommandNewClient}" Click="button_Click"/>
+            <Grid HorizontalAlignment="Left" Height="248" Margin="319,34,0,0" VerticalAlignment="Top" Width="238" Background="White">
+                <Label x:Name="label1" Content="First Name" HorizontalAlignment="Left" Margin="11,9,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="11,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Text="{Binding SelectedClient.FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label x:Name="label1_Copy" Content="Name" HorizontalAlignment="Left" Margin="131,9,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox1_Copy" HorizontalAlignment="Left" Height="23" Margin="130,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" Text="{Binding SelectedClient.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label x:Name="label1_Copy1" Content="Id Code" HorizontalAlignment="Left" Margin="11,63,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox1_Copy1" HorizontalAlignment="Left" Height="23" Margin="11,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="91" Text="{Binding SelectedClient.IdCode, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label x:Name="label1_Copy2" Content="Phone" HorizontalAlignment="Left" Margin="11,166,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox1_Copy2" HorizontalAlignment="Left" Height="23" Margin="11,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" TextChanged="textBox1_Copy2_TextChanged" Text="{Binding SelectedClient.Phone, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label x:Name="label1_Copy3" Content="Date of Birdth" HorizontalAlignment="Left" Margin="11,117,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox1_Copy3" HorizontalAlignment="Left" Height="23" Margin="11,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67" TextChanged="textBox1_Copy2_TextChanged" Text="{Binding SelectedClient.DateOfBirdth, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label x:Name="label1_Copy4" Content="Adress" HorizontalAlignment="Left" Margin="110,63,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox1_Copy4" HorizontalAlignment="Left" Height="126" Margin="110,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="118" TextChanged="textBox1_Copy2_TextChanged" Text="{Binding SelectedClient.Adress, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button x:Name="button" Content="Save" HorizontalAlignment="Left" Margin="130,220,0,0" VerticalAlignment="Top" Width="98" Height="19" Command="{Binding CommandUpdateClient}" Click="button_Click"/>
+                <Button x:Name="button_Copy" Content="New" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Width="98" Height="19" Command="{Binding CommandNewClient}" Click="button_Click"/>
             </Grid>
             <Label x:Name="label_Copy" Content="Search" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top" FontSize="16"/>
             <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="146,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" RenderTransformOrigin="0.5,0.5" FontSize="16"  Text="{Binding FilterTextClient, UpdateSourceTrigger=PropertyChanged}">
@@ -164,6 +164,7 @@
                     </TransformGroup>
                 </Label.RenderTransform>
             </Label>
+            <Button x:Name="button2" Content="Add Acount" HorizontalAlignment="Left" Margin="342,9,0,0" VerticalAlignment="Top" Width="182"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="292" Margin="582,321,0,0" Grid.Row="1" VerticalAlignment="Top" Width="401" Background="#FFD1D1D1"/>
     </Grid>

@@ -52,14 +52,12 @@ namespace BankDB.viewModel
                 db.Operation.Add(ActiveOperation);
                 db.SaveChanges();
             }
-            //    MessageBox.Show("Acount " + activeAcount.NameClient + " ");
             refreshOperation(ActiveOperation);
+            MessageBox.Show("added new operation sum = " + ActiveOperation.SumOperation);
         }
 
         public void refreshOperation(Operation op)
         {
-            //MainWindow mw = new MainWindow();
-            //mw.Show();
             window.Close();
             iMainWindow.refreshOperation(op);
         }

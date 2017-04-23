@@ -30,6 +30,8 @@ namespace BankDB
         
         private Acount selectedAcount;
         private List<Client> Clients;
+        List<Acount> listAcounts;
+
         public ICollectionView ActiveAcountOperation { get; set; }
         public ICollectionView ListClients { get; set; }
         private Client selectedClient;
@@ -54,7 +56,7 @@ namespace BankDB
 
         public void getAcounts()
         {
-            List<Acount> ac = new List<Acount>();
+            listAcounts = new List<Acount>();
             var typeAcounts = db.AcountType;
             var clients = db.Client;
             var acounts = db.Acount;
@@ -76,9 +78,9 @@ namespace BankDB
                         break;
                     }
                 }
-                ac.Add(u);
+                listAcounts.Add(u);
             }
-            Acounts = CollectionViewSource.GetDefaultView(ac);
+            Acounts = CollectionViewSource.GetDefaultView(listAcounts);
         }
 
         public void getClients()
@@ -184,8 +186,7 @@ namespace BankDB
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
-
-
+        
 
         public DelegateCommand GiveFilterCommand
         {
@@ -309,9 +310,32 @@ namespace BankDB
             listOp.Add(op);
             ActiveAcountOperation = CollectionViewSource.GetDefaultView(listOp);
             ActiveAcountOperation.Filter = OperationFilter;
+            using(bankDatabaseEntities bd = new bankDatabaseEntities())
+            {
+                if (op.TypeOperation.Equals("Add"))
+                {
+                    SelectedAcount.Sum += op.SumOperation;
+                }
+                else
+                {
+                    SelectedAcount.Sum -= op.SumOperation;
+                }
+                bd.SaveChanges();
+            }
+            
+            
+            for(int i =0; i<listAcounts.Count; i++)
+            {
+                if (listAcounts[i].IdAcount == SelectedAcount.IdAcount)
+                {
+                    listAcounts[i].Sum = SelectedAcount.Sum;
+                    break;
+                }
+            }
+            Acounts = CollectionViewSource.GetDefaultView(listAcounts);
+            Acounts.Filter = AcountsFilter;
             Thread.Sleep(1000);
             OnPropertyChanged("SelectedAcount");
-            //window.Hide();
         }
     }
 }
