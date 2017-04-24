@@ -22,18 +22,11 @@ namespace BankDB
         public MainWindow()
         {
             InitializeComponent();
+            for (int i = 0; i < 51; i++)
+            {
+                comboBox.Items.Add(i);
+            }
             DataContext = new AcountsViewModel(this);
-        }
-
-        
-
-        private void textBox1_Copy2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
         }
     }
     }

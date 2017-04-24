@@ -7,14 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BankDB
+namespace BankDB.model
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
-    public partial class Acount
+    public partial class Acount : INotifyPropertyChanged
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Acount()
@@ -22,7 +22,6 @@ namespace BankDB
             this.Operation = new HashSet<Operation>();
         }
     
-       
         public int IdAcount { get; set; }
         public int IdClient { get; set; }
         public int IdType { get; set; }
@@ -45,10 +44,6 @@ namespace BankDB
             }
         }
 
-        public int Sum { get; set; }
-        public string Garantee { get; set; }
-        public string CodeAcount { get; set; }
-
         public string NameClient
         {
             get
@@ -56,7 +51,10 @@ namespace BankDB
                 return Client.FirstName.Trim() + " " + Client.Name.Trim();
             }
         }
-
+        public int Sum { get; set; }
+        public string Garantee { get; set; }
+        public string CodeAcount { get; set; }
+    
         public virtual AcountType AcountType { get; set; }
         public virtual Client Client { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

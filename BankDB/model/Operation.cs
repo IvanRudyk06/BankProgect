@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BankDB
+namespace BankDB.model
 {
     using System;
     using System.Collections.Generic;
@@ -17,16 +17,19 @@ namespace BankDB
         public int IdOperation { get; set; }
         public int IdAcount { get; set; }
         public System.DateTime DateOperation { get; set; }
-        private string typeOperation;
 
-        public string TypeOperation
-        {
+        private string typeOperation;
+        public string TypeOperation {
             get
             {
-                if (typeOperation != null)
+                if(typeOperation!= null)
+                {
                     return typeOperation.Trim();
+                }
                 else
+                {
                     return typeOperation;
+                }
             }
             set
             {

@@ -1,4 +1,5 @@
-﻿using BankDB.viewModel;
+﻿using BankDB.model;
+using BankDB.viewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

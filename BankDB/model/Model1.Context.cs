@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BankDB
+namespace BankDB.model
 {
     using System;
     using System.Data.Entity;
@@ -16,7 +16,7 @@ namespace BankDB
     public partial class bankDatabaseEntities : DbContext
     {
         public bankDatabaseEntities()
-            : base("name=bankDatabaseEntities1")
+            : base("name=bankDatabaseEntities")
         {
         }
     

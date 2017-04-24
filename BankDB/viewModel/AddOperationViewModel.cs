@@ -1,4 +1,5 @@
-﻿using Mvvm.Commands;
+﻿using BankDB.model;
+using Mvvm.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,8 +12,6 @@ using System.Windows;
 
 namespace BankDB.viewModel
 {
-
-
     class AddOperationViewModel : INotifyPropertyChanged
     {
         IAcountsViewModel iMainWindow;

@@ -1,0 +1,22 @@
+﻿<Window x:Class="BankDB.view.AddAcountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankDB.view"
+        mc:Ignorable="d"
+        Title="Add Acount" Height="245.595" Width="397.418">
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="195" Margin="10,10,0,0" VerticalAlignment="Top" Width="369" Background="#FFD1D1D1">
+            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="168"/>
+            <Label x:Name="label" Content="Type acount" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label1" Content="Sum" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="10,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168"/>
+            <Label x:Name="label2" Content="Garantee" HorizontalAlignment="Left" Margin="183,5,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="183,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
+            <Label x:Name="label3" Content="Data Close" HorizontalAlignment="Left" Margin="183,59,0,0" VerticalAlignment="Top"/>
+            <DatePicker HorizontalAlignment="Left" Margin="183,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.361,0.417" Width="186"/>
+        </Grid>
+
+    </Grid>
+</Window>

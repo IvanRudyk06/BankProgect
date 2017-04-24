@@ -1,4 +1,6 @@
-﻿using BankDB.viewModel;
+﻿using BankDB.model;
+using BankDB.view;
+using BankDB.viewModel;
 using Mvvm.Commands;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,10 @@ namespace BankDB
         private DelegateCommand FilterCommandClients;
         private DelegateCommand FilterCommand;
         private DelegateCommand AddOperationCommand;
+        private DelegateCommand addAcountCommand;
+
+        private DelegateCommand newTypeAcountCommand;
+        private DelegateCommand saveTypeAcountCommand;
         public event PropertyChangedEventHandler PropertyChanged;
 
         bankDatabaseEntities db = new bankDatabaseEntities();
@@ -34,6 +40,23 @@ namespace BankDB
 
         public ICollectionView ActiveAcountOperation { get; set; }
         public ICollectionView ListClients { get; set; }
+
+        public ObservableCollection<AcountType> AcountTypes { get; set; }
+
+        private AcountType selectedAcountType;
+        public AcountType SelectedAcountType
+        {
+            get
+            {
+                return selectedAcountType;
+            }
+            set
+            {
+                selectedAcountType = value;
+                OnPropertyChanged("SelectedAcountType");
+            }
+        }
+
         private Client selectedClient;
         public ICollectionView Acounts { get; set; }
         public string FilterTextAcount { get; set; }
@@ -46,23 +69,23 @@ namespace BankDB
             FilterTextAcount = "";
             FilterTextClient = "";
             ActiveAcountOperation = null;
+            getAcountTypes();
+            getClients();
+            ListClients.Filter = ClientsFilter;
             getAcounts();
             addToListOperation();
             ActiveAcountOperation.Filter = OperationFilter;
             Acounts.Filter = AcountsFilter;
-            getClients();
-            ListClients.Filter = ClientsFilter;
+            
         }
 
         public void getAcounts()
         {
             listAcounts = new List<Acount>();
-            var typeAcounts = db.AcountType;
-            var clients = db.Client;
             var acounts = db.Acount;
             foreach (Acount u in acounts)
             {
-                foreach (Client cl in clients)
+                foreach (Client cl in Clients)
                 {
                     if (u.IdClient == cl.IdClient)
                     {
@@ -70,7 +93,7 @@ namespace BankDB
                         break;
                     }
                 }
-                foreach (AcountType at in typeAcounts)
+                foreach (AcountType at in AcountTypes)
                 {
                     if (u.IdType == at.IdType)
                     {
@@ -102,6 +125,16 @@ namespace BankDB
                 selectedAcount = value;
                 ActiveAcountOperation.Filter = OperationFilter;
                 OnPropertyChanged("SelectedAcount");
+            }
+        }
+
+        public void getAcountTypes()
+        {
+            AcountTypes = new ObservableCollection<AcountType>();
+            var typeAcounts = db.AcountType;
+            foreach (AcountType act in typeAcounts)
+            {
+                AcountTypes.Add(act);
             }
         }
 
@@ -305,12 +338,95 @@ namespace BankDB
             else return false;
         }
 
+        private bool canAddAcount()
+        {
+            if (SelectedClient != null)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public DelegateCommand NewTypeAcountComand
+        {
+            get
+            {
+                if (newTypeAcountCommand == null)
+                {
+                    newTypeAcountCommand = new DelegateCommand(newTypeAcount);
+                }
+                return newTypeAcountCommand;
+            }
+        }
+
+        private void newTypeAcount()
+        {
+            SelectedAcountType = new AcountType();
+        }
+
+        public DelegateCommand SaveTypeAcountComand
+        {
+            get
+            {
+                if (saveTypeAcountCommand == null)
+                {
+                   saveTypeAcountCommand = new DelegateCommand(saveTypeAcount);
+                }
+                return saveTypeAcountCommand;
+            }
+        }
+
+        private void saveTypeAcount()
+        {
+            if(SelectedAcountType.IdType == 0)
+            {
+                try
+                {
+                    using(bankDatabaseEntities bd = new bankDatabaseEntities())
+                    {
+                        bd.AcountType.Add((AcountType)SelectedAcountType.Clone());
+                        bd.SaveChanges();
+                        AcountTypes.Add((AcountType)SelectedAcountType.Clone());
+                        Thread.Sleep(1000);
+                        OnPropertyChanged("Refresh acountTypes");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Input corect data Acount Type");
+                }
+            }
+            else
+            {
+                db.SaveChanges();
+            }
+            
+        }
+
+        public DelegateCommand AddAcountComand
+        {
+            get
+            {
+                if (addAcountCommand == null)
+                {
+                    addAcountCommand = new DelegateCommand(addAcount, canAddAcount);
+                }
+                return addAcountCommand;
+            }
+        }
+
+        private void addAcount()
+        {
+            AddAcountWindow addAc = new AddAcountWindow(SelectedClient, this);
+            addAc.ShowDialog();
+        }
+
         public void refreshOperation(Operation op)
         {
             listOp.Add(op);
             ActiveAcountOperation = CollectionViewSource.GetDefaultView(listOp);
             ActiveAcountOperation.Filter = OperationFilter;
-            using(bankDatabaseEntities bd = new bankDatabaseEntities())
+            using (bankDatabaseEntities bd = new bankDatabaseEntities())
             {
                 if (op.TypeOperation.Equals("Add"))
                 {
@@ -322,9 +438,9 @@ namespace BankDB
                 }
                 bd.SaveChanges();
             }
-            
-            
-            for(int i =0; i<listAcounts.Count; i++)
+
+
+            for (int i = 0; i < listAcounts.Count; i++)
             {
                 if (listAcounts[i].IdAcount == SelectedAcount.IdAcount)
                 {
