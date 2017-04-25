@@ -6,23 +6,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankDB"
         mc:Ignorable="d"
-        Title="BankDb" Height="675.334" Width="1001" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="BankDb" Height="686.334" Width="1017" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Menu Background="White">
-            <MenuItem Header="File" FontSize="14">
-                <MenuItem Header="New"></MenuItem>
-                <MenuItem Header="Open"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="SaveAs..."></MenuItem>
-                <Separator></Separator>
-                <MenuItem Header="Exit"></MenuItem>
-            </MenuItem>
-        </Menu>
-        <Grid HorizontalAlignment="Left" Height="306" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="973" Background="#FFD1D1D1">
+       
+        <Grid HorizontalAlignment="Left" Height="306" Margin="10,10,10,0" Grid.Row="1" VerticalAlignment="Top" Width="991" Background="#FFD1D1D1">
             <Label x:Name="label" Content="Search" HorizontalAlignment="Left" Margin="103,10,0,0" VerticalAlignment="Top" FontSize="16"/>
             <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="161,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" RenderTransformOrigin="0.5,0.5" FontSize="16" Text="{Binding FilterTextAcount, UpdateSourceTrigger=PropertyChanged}">
                 <intr:Interaction.Triggers>
@@ -106,7 +97,7 @@
             <Label x:Name="label_Copy1" Content="Acount №" HorizontalAlignment="Left" Margin="636,46,0,0" VerticalAlignment="Top" FontSize="16"/>
             <Label x:Name="label3" HorizontalAlignment="Left" Margin="724,46,0,0" VerticalAlignment="Top" FontSize="16" Content="{Binding SelectedAcount.CodeAcount, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="292" Margin="10,321,0,0" Grid.Row="1" VerticalAlignment="Top" Width="567" Background="#FFD1D1D1">
+        <Grid HorizontalAlignment="Left" Height="305" Margin="10,321,0,10" Grid.Row="1" VerticalAlignment="Top" Width="567" Background="#FFD1D1D1">
             <Grid HorizontalAlignment="Left" Height="248" Margin="319,34,0,0" VerticalAlignment="Top" Width="238" Background="White">
                 <Label x:Name="label1" Content="First Name" HorizontalAlignment="Left" Margin="11,9,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="11,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Text="{Binding SelectedClient.FirstName, UpdateSourceTrigger=PropertyChanged}"/>
@@ -171,7 +162,7 @@
             <Button x:Name="button2" Content="Add Acount" Margin="319,9,140,0" VerticalAlignment="Top" Command="{Binding AddAcountComand}"/>
             <Button x:Name="button2_Copy" Content="Delete client" Margin="449,10,10,0" VerticalAlignment="Top"/>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="292" Margin="582,321,0,0" Grid.Row="1" VerticalAlignment="Top" Width="401" Background="#FFD1D1D1">
+        <Grid HorizontalAlignment="Left" Height="305" Margin="582,321,10,10" Grid.Row="1" VerticalAlignment="Top" Width="419" Background="#FFD1D1D1">
             <ListBox x:Name="listBox3" HorizontalAlignment="Left" Height="185" Margin="10,39,0,0" VerticalAlignment="Top" Width="381" ItemsSource="{Binding AcountTypes, UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding SelectedAcountType}">
                 <ListBox.ItemTemplate>

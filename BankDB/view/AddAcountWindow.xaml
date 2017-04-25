@@ -5,17 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankDB.view"
         mc:Ignorable="d"
-        Title="Add Acount" Height="245.595" Width="397.418">
+        Title="Add Acount" Height="227.595" Width="398.418">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="195" Margin="10,10,0,0" VerticalAlignment="Top" Width="369" Background="#FFD1D1D1">
-            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="168"/>
+        <Grid HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" VerticalAlignment="Top" Width="370" Background="#FFD1D1D1">
+            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="168" SelectedItem="{Binding SelectedAcountType, UpdateSourceTrigger=PropertyChanged}"/>
             <Label x:Name="label" Content="Type acount" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top"/>
             <Label x:Name="label1" Content="Sum" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="10,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168"/>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="10,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Text="{Binding AcountAdding.Sum, UpdateSourceTrigger=PropertyChanged}"/>
             <Label x:Name="label2" Content="Garantee" HorizontalAlignment="Left" Margin="183,5,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="183,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
+            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="183,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Text="{Binding AcountAdding.Garantee, UpdateSourceTrigger=PropertyChanged}"/>
             <Label x:Name="label3" Content="Data Close" HorizontalAlignment="Left" Margin="183,59,0,0" VerticalAlignment="Top"/>
-            <DatePicker HorizontalAlignment="Left" Margin="183,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.361,0.417" Width="186"/>
+            <DatePicker Margin="183,84,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.361,0.417" Text="{Binding AcountAdding.DateClose, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button x:Name="button" Content="Add" HorizontalAlignment="Left" Margin="273,126,0,0" VerticalAlignment="Top" Width="86" Height="36" Command="{Binding AddAcountOkComand}"/>
+            <Button x:Name="button1" Content="Cancel" HorizontalAlignment="Left" Margin="187,126,0,0" VerticalAlignment="Top" Width="81" Height="36"/>
+            <Label x:Name="label1_Copy" Content="Code Acount" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Height="23" Margin="10,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Text="{Binding AcountAdding.CodeAcount, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
     </Grid>

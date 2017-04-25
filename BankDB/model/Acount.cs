@@ -48,7 +48,14 @@ namespace BankDB.model
         {
             get
             {
-                return Client.FirstName.Trim() + " " + Client.Name.Trim();
+                if (Client != null)
+                {
+                    return Client.FirstName.Trim() + " " + Client.Name.Trim();
+                } else
+                {
+                    return "";
+                }
+                
             }
         }
         public int Sum { get; set; }

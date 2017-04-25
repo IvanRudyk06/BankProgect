@@ -25,15 +25,18 @@ namespace BankDB.view
         public AddAcountWindow(Client selectedClient, IAcountsViewModel view)
         {
             InitializeComponent();
-            DataContext = new AcountsViewModel(this);
+            ObservableCollection<AcountType> typeAc = new ObservableCollection<AcountType>();
             using(bankDatabaseEntities db = new bankDatabaseEntities())
             {
                 var at = db.AcountType;
                 foreach(AcountType a in at)
                 {
                     comboBox.Items.Add(a);
+                    typeAc.Add(a);
                 }
+
             }
+            DataContext = new AddAcountViewModel(this, selectedClient, typeAc, view);
         }
     }
 }

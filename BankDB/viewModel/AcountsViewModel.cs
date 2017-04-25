@@ -453,5 +453,14 @@ namespace BankDB
             Thread.Sleep(1000);
             OnPropertyChanged("SelectedAcount");
         }
+
+        public void refreshAcount(Acount acount)
+        {
+            listAcounts.Add(acount);
+            Acounts = CollectionViewSource.GetDefaultView(listAcounts);
+            Acounts.Filter = AcountsFilter;
+            Thread.Sleep(1000);
+            OnPropertyChanged("Refresh Acount");
+        }
     }
 }

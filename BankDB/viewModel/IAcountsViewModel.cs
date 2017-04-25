@@ -10,5 +10,7 @@ namespace BankDB.viewModel
   public interface IAcountsViewModel
     {
         void refreshOperation(Operation op);
+
+        void refreshAcount(Acount acount);
     }
 }
