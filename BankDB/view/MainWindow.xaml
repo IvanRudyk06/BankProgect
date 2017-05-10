@@ -6,14 +6,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankDB"
         mc:Ignorable="d"
-        Title="BankDb" Height="686.334" Width="1017" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="BankDb" Height="675.334" Width="1027" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-       
-        <Grid HorizontalAlignment="Left" Height="306" Margin="10,10,10,0" Grid.Row="1" VerticalAlignment="Top" Width="991" Background="#FFD1D1D1">
+
+        <Grid HorizontalAlignment="Left" Height="306" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="991" Background="#FFD1D1D1">
             <Label x:Name="label" Content="Search" HorizontalAlignment="Left" Margin="103,10,0,0" VerticalAlignment="Top" FontSize="16"/>
             <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="161,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" RenderTransformOrigin="0.5,0.5" FontSize="16" Text="{Binding FilterTextAcount, UpdateSourceTrigger=PropertyChanged}">
                 <intr:Interaction.Triggers>
@@ -96,6 +96,8 @@
             <Button x:Name="button1" Content="ADD Operation" HorizontalAlignment="Left" Margin="787,10,0,0" VerticalAlignment="Top" Width="176" Height="21" Command="{Binding ComAddOperationWShow}"/>
             <Label x:Name="label_Copy1" Content="Acount №" HorizontalAlignment="Left" Margin="636,46,0,0" VerticalAlignment="Top" FontSize="16"/>
             <Label x:Name="label3" HorizontalAlignment="Left" Margin="724,46,0,0" VerticalAlignment="Top" FontSize="16" Content="{Binding SelectedAcount.CodeAcount, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button x:Name="button4" Content="Button" HorizontalAlignment="Left" Height="0" Margin="482,3,0,0" VerticalAlignment="Top" Width="3"/>
+            <Button x:Name="button5" Content="Show clients if date end &lt; 1 month" HorizontalAlignment="Left" Margin="366,10,0,0" VerticalAlignment="Top" Width="233" Height="31" Command="{Binding ShowClientDateCloseIsEnd}"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="305" Margin="10,321,0,10" Grid.Row="1" VerticalAlignment="Top" Width="567" Background="#FFD1D1D1">
             <Grid HorizontalAlignment="Left" Height="248" Margin="319,34,0,0" VerticalAlignment="Top" Width="238" Background="White">

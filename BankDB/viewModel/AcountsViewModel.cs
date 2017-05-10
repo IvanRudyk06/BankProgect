@@ -27,6 +27,7 @@ namespace BankDB
         private DelegateCommand FilterCommand;
         private DelegateCommand AddOperationCommand;
         private DelegateCommand addAcountCommand;
+        private DelegateCommand showClientDateCloseIsEnd;
 
         private DelegateCommand newTypeAcountCommand;
         private DelegateCommand saveTypeAcountCommand;
@@ -461,6 +462,43 @@ namespace BankDB
             Acounts.Filter = AcountsFilter;
             Thread.Sleep(1000);
             OnPropertyChanged("Refresh Acount");
+        }
+
+        public DelegateCommand ShowClientDateCloseIsEnd
+        {
+            get
+            {
+                if (showClientDateCloseIsEnd == null)
+                {
+                    showClientDateCloseIsEnd = new DelegateCommand(showFormClient);
+                }
+                return showClientDateCloseIsEnd;
+            }
+        }
+
+        private void showFormClient()
+        {
+            ListClients.Filter = null;
+            ListClients.Filter = oldClientsFilter;
+            OnPropertyChanged("SelectedClient");
+        }
+
+        private bool oldClientsFilter(object obj)
+        {
+            DateTime dateNow = DateTime.Now;
+            
+            bool result = true;
+            Client current = obj as Client;
+            if (current != null)
+            {
+                foreach(Acount ac in current.Acount)
+                {
+                    if (ac.DateClose > new DateTime(dateNow.Year, dateNow.Month, dateNow.Day))
+                        result = false;
+                }
+                
+            }
+            return result;
         }
     }
 }

@@ -28,6 +28,11 @@ namespace BankDB
             }
             DataContext = new AcountsViewModel(this);
         }
+
+        private void button5_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
     }
 
