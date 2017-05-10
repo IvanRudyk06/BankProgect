@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BankDB
+namespace BankDB.model
 {
     using System;
     using System.Data.Entity;

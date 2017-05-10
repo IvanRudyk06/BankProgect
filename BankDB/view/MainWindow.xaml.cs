@@ -22,26 +22,16 @@ namespace BankDB
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new AcountsViewModel();
+            for (int i = 0; i < 51; i++)
+            {
+                comboBox.Items.Add(i);
+            }
+            DataContext = new AcountsViewModel(this);
         }
 
-        private void textBox1_Copy2_TextChanged(object sender, TextChangedEventArgs e)
+        private void button5_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            //var context = new bankDatabaseEntities();
-
-            //AcountType ac = new AcountType();
-            //ac.IdType = 5;
-            //ac.nameType = "214";
-            //ac.interestRate = 2;
-
-            //    context.AcountType.Add(ac);
-            //    //context.Entry(ac).State = EntityState.Added;
-            //    context.SaveChanges();
         }
     }
     }

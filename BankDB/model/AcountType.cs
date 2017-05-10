@@ -9,79 +9,35 @@
 
 namespace BankDB
 {
+    using model;
     using System;
     using System.Collections.Generic;
-    
 
-    public partial class Client : ICloneable
+    public partial class AcountType : ICloneable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Client()
+        public AcountType()
         {
             this.Acount = new HashSet<Acount>();
-            DateOfBirdth = new DateTime(1900, 01, 01);
-        }
-    
-        public int IdClient { get; set; }
-        private string firstname;
-
-        public string FirstName
-        {
-            get
-            {
-                if (firstname!=null)
-                    return firstname.Trim();
-                else
-                    return firstname;
-
-            }
-            set
-            {
-                firstname = value;
-
-            }
         }
 
+        public int IdType { get; set; }
         private string name;
-
-        public string Name
-        {
+        public string nameType {
             get
             {
                 if (name != null)
+                {
                     return name.Trim();
-                else
-                    return name;
-
+                }
+                else   return name;
             }
             set
             {
                 name = value;
-
             }
         }
-        private string adress;
-
-        public string Adress
-        {
-            get
-            {
-                if (adress != null)
-                    return adress.Trim();
-                else return adress;
-            }
-            set
-            {
-                adress = value;
-            }
-        }
-
-
-        public int IdCode { get; set; }
-        public string Phone { get; set; }
-        public System.DateTime DateOfBirdth { get; set; }
-
-        
+        public float interestRate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acount> Acount { get; set; }
@@ -89,6 +45,11 @@ namespace BankDB
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return this.name.Trim() + " " + this.interestRate + "%";
         }
     }
 }

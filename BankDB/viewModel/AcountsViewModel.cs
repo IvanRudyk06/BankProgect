@@ -1,4 +1,7 @@
-﻿using Mvvm.Commands;
+﻿using BankDB.model;
+using BankDB.view;
+using BankDB.viewModel;
+using Mvvm.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,17 +11,112 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
 namespace BankDB
 {
-    class AcountsViewModel: INotifyPropertyChanged
+    class AcountsViewModel: INotifyPropertyChanged, IAcountsViewModel
     {
-        bankDatabaseEntities db = new bankDatabaseEntities();
+        Window window;
+        private DelegateCommand commandNewClient;
+        private DelegateCommand commandUpdateClient;
+        private DelegateCommand FilterCommandClients;
+        private DelegateCommand FilterCommand;
+        private DelegateCommand AddOperationCommand;
+        private DelegateCommand addAcountCommand;
+        private DelegateCommand showClientDateCloseIsEnd;
 
+        private DelegateCommand newTypeAcountCommand;
+        private DelegateCommand saveTypeAcountCommand;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        bankDatabaseEntities db = new bankDatabaseEntities();
+        
         private Acount selectedAcount;
+        private List<Client> Clients;
+        List<Acount> listAcounts;
+
+        public ICollectionView ActiveAcountOperation { get; set; }
+        public ICollectionView ListClients { get; set; }
+
+        public ObservableCollection<AcountType> AcountTypes { get; set; }
+
+        private AcountType selectedAcountType;
+        public AcountType SelectedAcountType
+        {
+            get
+            {
+                return selectedAcountType;
+            }
+            set
+            {
+                selectedAcountType = value;
+                OnPropertyChanged("SelectedAcountType");
+            }
+        }
+
+        private Client selectedClient;
+        public ICollectionView Acounts { get; set; }
+        public string FilterTextAcount { get; set; }
+        public string FilterTextClient { get; set; }
+        
+
+        public AcountsViewModel(Window w)
+        {
+            window = w;
+            FilterTextAcount = "";
+            FilterTextClient = "";
+            ActiveAcountOperation = null;
+            getAcountTypes();
+            getClients();
+            ListClients.Filter = ClientsFilter;
+            getAcounts();
+            addToListOperation();
+            ActiveAcountOperation.Filter = OperationFilter;
+            Acounts.Filter = AcountsFilter;
+            
+        }
+
+        public void getAcounts()
+        {
+            listAcounts = new List<Acount>();
+            var acounts = db.Acount;
+            foreach (Acount u in acounts)
+            {
+                foreach (Client cl in Clients)
+                {
+                    if (u.IdClient == cl.IdClient)
+                    {
+                        u.Client = cl;
+                        break;
+                    }
+                }
+                foreach (AcountType at in AcountTypes)
+                {
+                    if (u.IdType == at.IdType)
+                    {
+                        u.AcountType = at;
+                        break;
+                    }
+                }
+                listAcounts.Add(u);
+            }
+            Acounts = CollectionViewSource.GetDefaultView(listAcounts);
+        }
+
+        public void getClients()
+        {
+            Clients = new List<Client>();
+            var clients = db.Client;
+            foreach (Client u in clients)
+            {
+                Clients.Add(u);
+            }
+            ListClients = CollectionViewSource.GetDefaultView(Clients);
+        }
 
         public Acount SelectedAcount
         {
@@ -31,19 +129,22 @@ namespace BankDB
             }
         }
 
-        List<Client> Clients;
-
-        public ICollectionView ActiveAcountOperation { get; set; }
-
-        public ICollectionView ListClients { get; set; }
-
-        private Client selectedClient;
+        public void getAcountTypes()
+        {
+            AcountTypes = new ObservableCollection<AcountType>();
+            var typeAcounts = db.AcountType;
+            foreach (AcountType act in typeAcounts)
+            {
+                AcountTypes.Add(act);
+            }
+        }
 
         public Client SelectedClient
         {
             get
             {
                 return selectedClient;
+                
             }
             set
             {
@@ -52,24 +153,18 @@ namespace BankDB
             }
         }
 
+        List<Operation> listOp;
         public void addToListOperation()
         {
-            ActiveAcountOperation = null;
-            
-                List<Operation> listOp = new List<Operation>();
-                var oper = db.Operation;
-                foreach (Operation cl in oper)
-                {
-                    listOp.Add(cl);
-                }
-                ActiveAcountOperation = CollectionViewSource.GetDefaultView(listOp);
+         //   ActiveAcountOperation
+            listOp = new List<Operation>();
+            var oper = db.Operation;
+            foreach (Operation cl in oper)
+            {
+                listOp.Add(cl);
+            }
+            ActiveAcountOperation = CollectionViewSource.GetDefaultView(listOp);
         }
-        
-        public ICollectionView Acounts { get; set; }
-
-        public string FilterTextAcount { get; set; }
-
-        public string FilterTextClient { get; set; }
 
         private bool AcountsFilter(object obj)
         {
@@ -111,8 +206,21 @@ namespace BankDB
             }
             return result;
         }
+
+        private void ChangeFilterClients()
+        {
+            ListClients.Filter = null;
+            ListClients.Filter = ClientsFilter;
+        }
+
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
         
-        private DelegateCommand FilterCommand;
 
         public DelegateCommand GiveFilterCommand
         {
@@ -133,8 +241,6 @@ namespace BankDB
         }
 
 
-        private DelegateCommand FilterCommandClients;
-
         public DelegateCommand GiveFilterCommandClients
         {
             get
@@ -145,79 +251,7 @@ namespace BankDB
                 }
                 return FilterCommandClients;
             }
-        }
-
-        private void ChangeFilterClients()
-        {
-            ListClients.Filter = null;
-            ListClients.Filter = ClientsFilter;
-        }
-
-        public void getAcounts()
-        {
-                List<Acount> ac = new List<Acount>();
-                var typeAcounts = db.AcountType;
-                var clients = db.Client;
-                var acounts = db.Acount;
-                foreach (Acount u in acounts)
-                {
-                    foreach (Client cl in clients)
-                    {
-                        if (u.IdClient == cl.IdClient)
-                        {
-                            u.Client = cl;
-                            break;
-                        }
-                    }
-                    foreach (AcountType at in typeAcounts)
-                    {
-                        if (u.IdType == at.IdType)
-                        {
-                            u.AcountType = at;
-                            break;
-                        }
-                    }
-                    ac.Add(u);
-                }
-                Acounts = CollectionViewSource.GetDefaultView(ac);
-        }
-
-        public AcountsViewModel()
-        {
-            FilterTextAcount = "";
-            FilterTextClient = "";
-            ActiveAcountOperation = null;
-            getAcounts();
-            addToListOperation();
-            ActiveAcountOperation.Filter = OperationFilter;
-            Acounts.Filter = AcountsFilter;
-            getClients();
-            ListClients.Filter = ClientsFilter;
-        }
-
-       
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));  
-            } 
-        }       
-        
-        public void getClients()
-        {
-                Clients = new List<Client>();
-                var clients = db.Client;
-                foreach (Client u in clients)
-                {
-                    Clients.Add(u);
-                }
-                ListClients = CollectionViewSource.GetDefaultView(Clients);
-        }
-
-
-        private DelegateCommand commandUpdateClient;
+        }        
 
         public DelegateCommand CommandUpdateClient
         {
@@ -259,10 +293,6 @@ namespace BankDB
             
         }
 
-
-
-        private DelegateCommand commandNewClient;
-
         public DelegateCommand CommandNewClient
         {
             get
@@ -282,5 +312,193 @@ namespace BankDB
             OnPropertyChanged("SelectedClient");
         }
 
+        public DelegateCommand ComAddOperationWShow
+        {
+            get
+            {
+                if (AddOperationCommand == null)
+                {
+                    AddOperationCommand = new DelegateCommand(addOperationWindowShow, canAddOperation);
+                }
+                return AddOperationCommand;
+            }
+        }
+
+        private void addOperationWindowShow()
+        {
+            AddOpration addOp = new AddOpration(SelectedAcount, this);
+            addOp.ShowDialog();
+        }
+
+        private bool canAddOperation()
+        {
+            if (SelectedAcount != null)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        private bool canAddAcount()
+        {
+            if (SelectedClient != null)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public DelegateCommand NewTypeAcountComand
+        {
+            get
+            {
+                if (newTypeAcountCommand == null)
+                {
+                    newTypeAcountCommand = new DelegateCommand(newTypeAcount);
+                }
+                return newTypeAcountCommand;
+            }
+        }
+
+        private void newTypeAcount()
+        {
+            SelectedAcountType = new AcountType();
+        }
+
+        public DelegateCommand SaveTypeAcountComand
+        {
+            get
+            {
+                if (saveTypeAcountCommand == null)
+                {
+                   saveTypeAcountCommand = new DelegateCommand(saveTypeAcount);
+                }
+                return saveTypeAcountCommand;
+            }
+        }
+
+        private void saveTypeAcount()
+        {
+            if(SelectedAcountType.IdType == 0)
+            {
+                try
+                {
+                    using(bankDatabaseEntities bd = new bankDatabaseEntities())
+                    {
+                        bd.AcountType.Add((AcountType)SelectedAcountType.Clone());
+                        bd.SaveChanges();
+                        AcountTypes.Add((AcountType)SelectedAcountType.Clone());
+                        Thread.Sleep(1000);
+                        OnPropertyChanged("Refresh acountTypes");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Input corect data Acount Type");
+                }
+            }
+            else
+            {
+                db.SaveChanges();
+            }
+            
+        }
+
+        public DelegateCommand AddAcountComand
+        {
+            get
+            {
+                if (addAcountCommand == null)
+                {
+                    addAcountCommand = new DelegateCommand(addAcount, canAddAcount);
+                }
+                return addAcountCommand;
+            }
+        }
+
+        private void addAcount()
+        {
+            AddAcountWindow addAc = new AddAcountWindow(SelectedClient, this);
+            addAc.ShowDialog();
+        }
+
+        public void refreshOperation(Operation op)
+        {
+            listOp.Add(op);
+            ActiveAcountOperation = CollectionViewSource.GetDefaultView(listOp);
+            ActiveAcountOperation.Filter = OperationFilter;
+            using (bankDatabaseEntities bd = new bankDatabaseEntities())
+            {
+                if (op.TypeOperation.Equals("Add"))
+                {
+                    SelectedAcount.Sum += op.SumOperation;
+                }
+                else
+                {
+                    SelectedAcount.Sum -= op.SumOperation;
+                }
+                bd.SaveChanges();
+            }
+
+
+            for (int i = 0; i < listAcounts.Count; i++)
+            {
+                if (listAcounts[i].IdAcount == SelectedAcount.IdAcount)
+                {
+                    listAcounts[i].Sum = SelectedAcount.Sum;
+                    break;
+                }
+            }
+            Acounts = CollectionViewSource.GetDefaultView(listAcounts);
+            Acounts.Filter = AcountsFilter;
+            Thread.Sleep(1000);
+            OnPropertyChanged("SelectedAcount");
+        }
+
+        public void refreshAcount(Acount acount)
+        {
+            listAcounts.Add(acount);
+            Acounts = CollectionViewSource.GetDefaultView(listAcounts);
+            Acounts.Filter = AcountsFilter;
+            Thread.Sleep(1000);
+            OnPropertyChanged("Refresh Acount");
+        }
+
+        public DelegateCommand ShowClientDateCloseIsEnd
+        {
+            get
+            {
+                if (showClientDateCloseIsEnd == null)
+                {
+                    showClientDateCloseIsEnd = new DelegateCommand(showFormClient);
+                }
+                return showClientDateCloseIsEnd;
+            }
+        }
+
+        private void showFormClient()
+        {
+            ListClients.Filter = null;
+            ListClients.Filter = oldClientsFilter;
+            OnPropertyChanged("SelectedClient");
+        }
+
+        private bool oldClientsFilter(object obj)
+        {
+            DateTime dateNow = DateTime.Now;
+            
+            bool result = true;
+            Client current = obj as Client;
+            if (current != null)
+            {
+                foreach(Acount ac in current.Acount)
+                {
+                    if (ac.DateClose > new DateTime(dateNow.Year, dateNow.Month, dateNow.Day))
+                        result = false;
+                }
+                
+            }
+            return result;
+        }
     }
 }
